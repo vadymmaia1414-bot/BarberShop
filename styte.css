@@ -1,0 +1,274 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --orange: #ff7b00;
+    --dark-bg: #1a1a1a;
+    --gray-bg: #6e6e6e;
+    --card-bg: #111111;
+    --text-light: #ffffff;
+}
+
+/* --- ШАПКА --- */
+.header {
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px; 
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-img {
+    height: 80px; 
+    width: auto;
+    display: block;
+    border-radius: 15px; 
+    box-shadow: 0 4px 10px rgba(255, 123, 0, 0.2); 
+    transition: transform 0.3s ease; 
+}
+
+.logo-img:hover {
+    transform: scale(1.05); 
+}
+
+.nav {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-btn {
+    background-color: var(--orange);
+    color: #000;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.nav-btn:hover {
+    transform: scale(1.05);
+}
+
+/* --- ГОЛОВНА СЕКЦІЯ --- */
+.hero {
+    background-image: url(img/hero-bg.avif);
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    position: relative;
+}
+
+.hero-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero h1 {
+    color: var(--text-light);
+    font-size: 4rem;
+    text-align: center;
+}
+
+/* --- ПОСЛУГИ --- */
+.services {
+    background-color: var(--gray-bg);
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.services h2 {
+    color: var(--text-light);
+    font-size: 3rem;
+    margin-bottom: 40px;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: var(--card-bg);
+    color: var(--text-light);
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #cccccc;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.card .price {
+    color: var(--orange);
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: var(--orange);
+    color: #000;
+    text-decoration: none;
+    padding: 15px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: block;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background-color: #e66e00;
+}
+
+/* --- БАРБЕРИ --- */
+.barbers {
+    background-color: var(--dark-bg);
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.barbers h2 {
+    color: var(--text-light);
+    font-size: 3rem;
+    margin-bottom: 40px;
+}
+
+.barber-card {
+    background-color: var(--card-bg);
+    color: var(--text-light);
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.barber-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    margin-bottom: 20px;
+    border: 3px solid var(--orange); 
+}
+
+.barber-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.barber-card .position {
+    color: var(--orange);
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.barber-card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #cccccc;
+}
+
+/* --- ПІДВАЛ --- */
+.footer {
+    background-color: #000;
+    color: var(--text-light);
+    padding: 40px 20px 20px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.footer-section h3 {
+    color: var(--orange);
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    margin-bottom: 10px;
+    color: #bbbbbb;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    color: #777;
+}
+
+/* --- АДАПТИВНІСТЬ --- */
+@media (max-width: 900px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .card, .barber-card {
+        width: 80%;
+    }
+    
+    .nav {
+        display: none; 
+    }
+}
+
+@media (max-width: 600px) {
+    .card, .barber-card {
+        width: 95%;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .header {
+        padding: 10px 20px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
