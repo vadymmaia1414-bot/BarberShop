@@ -10,6 +10,7 @@ const WORK_END = 21 * 60;     // 21:00 = 1260
 const STEP = 30;              // записуємо на кожні 30 хвилин
 const MAX_DAYS_AHEAD = 60;    // записатися можна не далі ніж на 60 днів
 const TIMEZONE = 'Europe/Kyiv';
+const CANCEL_BEFORE_MIN = 120; // скасувати можна не пізніше ніж за 2 години до візиту
 
 // ==========================================
 // ПЕРЕТВОРЕННЯ ЧАСУ
@@ -43,6 +44,15 @@ function kyivNow() {
     date: `${get('year')}-${get('month')}-${get('day')}`,
     minutes: Number(get('hour')) * 60 + Number(get('minute'))
   };
+}
+
+// Скільки хвилин залишилось до візиту (від'ємне число, якщо візит уже минув).
+// Рахуємо за київським часом.
+function minutesUntil(date, time) {
+  const now = kyivNow();
+  const days =
+    (Date.parse(`${date}T00:00:00Z`) - Date.parse(`${now.date}T00:00:00Z`)) / 86400000;
+  return days * 1440 + toMinutes(time) - now.minutes;
 }
 
 // ==========================================
@@ -113,4 +123,7 @@ function getFreeSlots(barberId, date, durationMin) {
   return slots;
 }
 
-module.exports = { getFreeSlots, validateDate, isValidTime, toMinutes, toTime };
+module.exports = {
+  getFreeSlots, validateDate, isValidTime, toMinutes, toTime,
+  minutesUntil, CANCEL_BEFORE_MIN
+};
