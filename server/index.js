@@ -2,7 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const crypto = require('crypto');
 const db = require('./db');
-const { getFreeSlots, validateDate, isValidTime, toMinutes, toTime } = require('./slots');
+const {
+  getFreeSlots, validateDate, isValidTime, toMinutes, toTime,
+  minutesUntil, CANCEL_BEFORE_MIN
+} = require('./slots');
 
 const app = express();
 
@@ -38,6 +41,47 @@ function generateCode() {
     }
   } while (exists.get(code));   // якщо раптом такий код уже є, генеруємо інший
   return code;
+}
+
+
+// Шукає запис за кодом І телефоном разом.
+// Якщо хоча б одне не збігається, повертає null.
+function findBooking(code, phone) {
+  const cleanPhone = normalizePhone(phone);
+  if (!cleanPhone || typeof code !== 'string') return null;
+
+  const row = db
+    .prepare(
+      `SELECT b.id, b.code, b.client_name, b.price, b.date,
+              b.start_time, b.end_time, b.status,
+              s.title AS service_title, br.name AS barber_name
+       FROM bookings b
+       JOIN services s ON s.id = b.service_id
+       JOIN barbers br ON br.id = b.barber_id
+       WHERE b.code = ? AND b.phone = ?`
+    )
+    .get(code.trim().toUpperCase(), cleanPhone);
+
+  return row || null;
+}
+
+// Перетворює рядок з бази на об'єкт для відповіді клієнту.
+// Телефон у відповідь не додаємо.
+function formatBooking(row) {
+  const minutesLeft = minutesUntil(row.date, row.start_time);
+  return {
+    code: row.code,
+    clientName: row.client_name,
+    serviceTitle: row.service_title,
+    barberName: row.barber_name,
+    date: row.date,
+    time: row.start_time,
+    endTime: row.end_time,
+    price: row.price,
+    status: row.status,
+    // Фронтенд за цим полем показує або ховає кнопку "Скасувати"
+    canCancel: row.status === 'active' && minutesLeft >= CANCEL_BEFORE_MIN
+  };
 }
 
 // ==========================================
@@ -224,6 +268,57 @@ app.post('/api/bookings', (req, res) => {
       status: 'active'
     }
   });
+});
+
+// ==========================================
+// МАРШРУТ: переглянути свій запис
+// GET /api/bookings/PBRSEU?phone=0991112233
+// ==========================================
+app.get('/api/bookings/:code', (req, res) => {
+  const row = findBooking(req.params.code, req.query.phone);
+
+  // Навмисно одна й та сама відповідь і для "немає коду", і для "чужий телефон":
+  // так не можна вгадувати, які коди існують.
+  if (!row) {
+    return res.status(404).json({ error: 'Запис не знайдено. Перевірте код і номер телефону.' });
+  }
+
+  res.json({ booking: formatBooking(row) });
+});
+
+// ==========================================
+// МАРШРУТ: скасувати запис
+// POST /api/bookings/PBRSEU/cancel   тіло: { "phone": "0991112233" }
+// ==========================================
+app.post('/api/bookings/:code/cancel', (req, res) => {
+  const row = findBooking(req.params.code, (req.body || {}).phone);
+
+  if (!row) {
+    return res.status(404).json({ error: 'Запис не знайдено. Перевірте код і номер телефону.' });
+  }
+
+  if (row.status === 'cancelled') {
+    return res.status(409).json({ error: 'Цей запис уже скасовано.' });
+  }
+
+  const minutesLeft = minutesUntil(row.date, row.start_time);
+
+  if (minutesLeft <= 0) {
+    return res.status(409).json({ error: 'Цей візит уже минув.' });
+  }
+
+  if (minutesLeft < CANCEL_BEFORE_MIN) {
+    return res.status(422).json({
+      error: 'Скасувати можна не пізніше ніж за 2 години до візиту. Зателефонуйте в барбершоп.'
+    });
+  }
+
+  // Запис НЕ видаляємо, а лише міняємо статус: історія лишається,
+  // а година автоматично стає вільною (getFreeSlots бере лише 'active').
+  db.prepare("UPDATE bookings SET status = 'cancelled' WHERE id = ?").run(row.id);
+  row.status = 'cancelled';
+
+  res.json({ message: 'Запис скасовано', booking: formatBooking(row) });
 });
 
 const PORT = process.env.PORT || 5000;

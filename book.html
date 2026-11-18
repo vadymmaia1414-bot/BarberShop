@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запис на стрижку | Барбершоп BITC</title>
+    <!-- Шапка й кольори беруться зі спільного styte.css, а стилі картки з booking.css -->
+    <link rel="stylesheet" href="styte.css">
+    <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html"><img src="img/logo.jpg" alt="Логотип BITC" class="logo-img"></a>
+        </div>
+        <nav class="nav">
+            <a href="index.html" class="nav-btn">Головна</a>
+            <a href="index.html#services" class="nav-btn">Послуги</a>
+            <a href="booking.html" class="nav-btn">Записатися</a>
+        </nav>
+    </header>
+
+    <main class="booking">
+        <section class="booking-card" aria-labelledby="booking-title">
+
+            <form id="booking-form" novalidate>
+                <div class="booking-body">
+                    <h1 class="booking-title" id="booking-title">Запис на стрижку</h1>
+
+                    <div class="field">
+                        <label for="name">Ім’я</label>
+                        <input id="name" name="name" type="text" autocomplete="given-name" maxlength="50" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="phone">Телефон</label>
+                        <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="099 111 22 33" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="service">Послуга</label>
+                        <select id="service" name="service" required></select>
+                    </div>
+
+                    <div class="field">
+                        <label for="barber">Майстер</label>
+                        <select id="barber" name="barber" required></select>
+                    </div>
+
+                    <div class="field">
+                        <label for="date">Дата</label>
+                        <input id="date" name="date" type="date" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="time">Година</label>
+                        <select id="time" name="time" required></select>
+                    </div>
+
+                    <dl>
+                        <div class="info-row">
+                            <dt>Тривалість</dt>
+                            <dd id="duration">—</dd>
+                        </div>
+                    </dl>
+
+                    <p class="message" id="message" role="alert"></p>
+                </div>
+
+                <div class="booking-footer">
+                    <span class="price-total" id="price">—</span>
+                    <button type="submit" class="btn-submit" id="submit" disabled>Записатися</button>
+                </div>
+            </form>
+
+            <div class="done" id="done" hidden>
+                <h2 class="booking-title">Запис створено</h2>
+                <p id="done-details"></p>
+                <div class="code-box" id="done-code" aria-label="Код запису"></div>
+                <p>Збережіть цей код. За ним і номером телефону запис можна переглянути чи скасувати.</p>
+                <a href="booking.html" class="btn">Створити ще один запис</a>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="booking.js"></script>
+</body>
+</html>
