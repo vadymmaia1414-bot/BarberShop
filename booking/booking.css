@@ -1,0 +1,229 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+:root {
+    --orange: #ff7b00;
+    --dark-bg: #1a1a1a;
+    --text-light: #ffffff;
+}
+
+/* --- ШАПКА --- */
+.header {
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-img {
+    height: 80px;
+    width: auto;
+    display: block;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(255, 123, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
+.nav {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-btn {
+    background-color: var(--orange);
+    color: #000;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.nav-btn:hover {
+    transform: scale(1.05);
+}
+
+/* --- СТОРІНКА ЗАПИСУ --- */
+.booking-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/hero-bg.avif');
+    background-size: cover;
+    background-position: center;
+    min-height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.booking-card {
+    background-color: #333333;
+    border: 5px solid var(--orange);
+    border-radius: 28px;
+    width: 100%;
+    max-width: 440px;
+    padding: 30px 30px 25px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.form-group-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.booking-form label {
+    color: var(--text-light);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.booking-form input,
+.booking-form select {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 2px solid #555;
+    background-color: #1f1f1f;
+    color: var(--text-light);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group-center select {
+    text-align: center;
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+    border-color: var(--orange);
+}
+
+.booking-footer {
+    margin-top: 25px;
+    padding-top: 18px;
+    border-top: 2px solid #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.booking-price {
+    color: var(--text-light);
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.booking-submit-btn {
+    background-color: var(--orange);
+    color: #000;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.booking-submit-btn:hover {
+    background-color: #e66e00;
+    transform: scale(1.05);
+}
+
+/* --- ПІДВАЛ --- */
+.footer {
+    background-color: #000;
+    color: var(--text-light);
+    padding: 40px 20px 20px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.footer-section h3 {
+    color: var(--orange);
+    margin-bottom: 15px;
+}
+
+.footer-section p {
+    margin-bottom: 10px;
+    color: #bbbbbb;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    color: #777;
+}
+
+/* --- АДАПТИВНІСТЬ --- */
+@media (max-width: 900px) {
+    .nav {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        padding: 10px 20px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .booking-card {
+        padding: 25px 20px 20px;
+    }
+
+    .booking-form label {
+        font-size: 1.3rem;
+    }
+
+    .booking-price {
+        font-size: 1.5rem;
+    }
+
+    .booking-submit-btn {
+        padding: 12px 20px;
+    }
+}

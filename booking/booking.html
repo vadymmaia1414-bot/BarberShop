@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запис на стрижку — Барбершоп BITS</title>
+    <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+
+    <!-- Шапка сайту -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="../index.html">
+                <img src="../img/logo.jpg" alt="Логотип BITS" class="logo-img">
+            </a>
+        </div>
+        <nav class="nav">
+            <a href="../index.html#home" class="nav-btn">Головна</a>
+            <a href="../index.html#services" class="nav-btn">Послуги</a>
+            <a href="../index.html#barbers" class="nav-btn">Майстри</a>
+            <a href="booking.html" class="nav-btn">Записатися</a>
+        </nav>
+    </header>
+
+    <!-- Секція форми запису -->
+    <main class="booking-section">
+        <div class="booking-card">
+            <form id="bookingForm" class="booking-form">
+                
+                <div class="form-group-left">
+                    <label for="clientName">Ім’я</label>
+                    <input type="text" id="clientName" name="clientName" placeholder="Введіть ваше ім'я" required>
+                </div>
+
+                <div class="form-group-center">
+                    <label for="bookingTime">Година</label>
+                    <select id="bookingTime" name="bookingTime" required>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="19:00">19:00</option>
+                        <option value="20:00">20:00</option>
+                    </select>
+                </div>
+
+                <div class="form-group-center">
+                    <label for="barberSelect">Майстер</label>
+                    <select id="barberSelect" name="barber" required>
+                        <option value="Олександр">Олександр (Старший барбер)</option>
+                        <option value="Дмитро">Дмитро (Барбер)</option>
+                        <option value="Максим">Максим (Молодший барбер)</option>
+                    </select>
+                </div>
+
+                <div class="form-group-center">
+                    <label for="durationSelect">Тривалість</label>
+                    <select id="durationSelect" name="duration" required>
+                        <option value="45 хв (Чоловіча стрижка)" data-price="500">45 хв — Чоловіча стрижка</option>
+                        <option value="30 хв (Оформлення бороди)" data-price="350">30 хв — Оформлення бороди</option>
+                        <option value="75 хв (Стрижка + Борода)" data-price="800">75 хв — Стрижка + Борода</option>
+                    </select>
+                </div>
+
+                <div class="booking-footer">
+                    <div class="booking-price" id="priceDisplay">500 грн.</div>
+                    <button type="submit" class="booking-submit-btn">Записатися</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- Підвал сайту -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Про нас</h3>
+                <p>Твій стиль — наша професія. Працюємо з увагою до кожної деталі.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Контакти</h3>
+                <p>📍 м. Хмельницький, вул. Проскурівська, 1</p>
+                <p>📞 +38 (098) 111-22-33</p>
+            </div>
+            <div class="footer-section">
+                <h3>Графік роботи</h3>
+                <p>Пн - Нд: 10:00 - 21:00</p>
+                <p>Без вихідних</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Барбершоп BITS. Всі права захищено.</p>
+        </div>
+    </footer>
+
+    <script>
+        const durationSelect = document.getElementById('durationSelect');
+        const priceDisplay = document.getElementById('priceDisplay');
+
+        durationSelect.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const price = selectedOption.getAttribute('data-price');
+            priceDisplay.textContent = price + ' грн.';
+        });
+    </script>
+
+</body>
+</html>

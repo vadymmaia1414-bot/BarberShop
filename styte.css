@@ -63,7 +63,7 @@ html {
 
 /* --- ГОЛОВНА СЕКЦІЯ --- */
 .hero {
-    background-image: url(img/hero-bg.avif);
+    background-image: url('img/hero-bg.avif');
     background-size: cover;
     background-position: center;
     height: 80vh;
